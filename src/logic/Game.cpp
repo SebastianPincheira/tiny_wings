@@ -19,8 +19,16 @@ void Game::run()
     }
     else
     {
-        sf::RenderWindow window(sf::VideoMode({800, 600}), "Tiny Wings");
+        const sf::Vector2f ratio{1920.f, -1080.f};
+        sf::RenderWindow window(
+            sf::VideoMode(
+                {static_cast<unsigned int>(ratio.x), static_cast<unsigned int>(-ratio.y)}
+            ), "Tiny Wings"
+        );
+        sf::View view({0.f, -(1.f/20.f) * ratio.y/4.f}, (1.f / 10.f) * ratio);
+
         window.setVerticalSyncEnabled(true);
+        window.setView(view);
 
         sf::Clock clock;
         while (window.isOpen())
@@ -29,7 +37,7 @@ void Game::run()
 
             sf::Time dt = clock.restart();
             update(dt.asSeconds());
-            
+
             render(window);
         }
     }

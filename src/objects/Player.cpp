@@ -53,7 +53,7 @@ void Player::redirect(float dt)
         }
         else
         {
-            m_p = getSpeed() * tangent;
+            m_p = Utils::sign(Utils::dot(m_p, tangent)) * getSpeed() * tangent;
         }
     };
     m_p += dt * acceleration;
@@ -64,5 +64,6 @@ void Player::move(float dt)
     updateTouchedFloorLastIter();
     m_q += dt * m_p;
     if (getHeight() < 0)
+        // Fix this correction method. It is ass lol (too unstable for consecutive collisions).
         m_q.y -= getHeight();
 }

@@ -2,11 +2,15 @@
 
 void Game::render(sf::RenderWindow &window) const
 {
+    const float radius {2.f};
+    
     window.clear(sf::Color::Black);
 
-    // draw everything here...
-    // window.draw(...);
+    sf::CircleShape shape(radius);
+    shape.setOrigin({radius, radius});
+    shape.setFillColor(sf::Color(100, 250, 50));
+    shape.setPosition(m_player.q());
+    window.draw(shape);
 
-    // end the current frame
     window.display();
 }

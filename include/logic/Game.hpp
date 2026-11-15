@@ -6,6 +6,7 @@
 #include "objects/World.hpp"
 #include "objects/Player.hpp"
 #include "Config.hpp"
+#include <iostream>
 
 class Game
 {

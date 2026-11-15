@@ -5,6 +5,7 @@
 #include "objects/World.hpp"
 #include "Config.hpp"
 #include "logic/Utils.hpp"
+#include <iostream>
 
 class Player
 {
