@@ -38,3 +38,6 @@ out
 .idea
 .vs
 .vscode
+
+# Doxygen generated documentation
+docs
