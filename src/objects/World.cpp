@@ -2,17 +2,17 @@
 
 World::World(float width)
     : m_width{width}
-{   
+{
 }
 
-double World::getHeight(float x) const
+float World::getHeight(float x) const
 {
-    return x * x;
+    return std::sin(x);
 }
 
 sf::Vector2f World::getTangent(float x) const
 {
-    sf::Vector2f t{1, 2.f * x};
+    sf::Vector2f t{1, std::cos(x)};
     return Utils::normalize(t);
 }
 
@@ -26,9 +26,23 @@ float World::getWidth() const
     return m_width;
 }
 
-float World::append(sf::Vertex vertex){
-    m_floor.append(vertex)
+void World::generateFloor(float x_i, float x_f, float dx)
+{
+    float width{getWidth()};
+    sf::VertexArray floor{sf::PrimitiveType::TriangleStrip};
+    for (int n{0}; x_i + n * dx < x_f; ++n)
+    {
+        float x{x_i + n * dx};
+        float fx{getHeight(x)};
+        sf::Vertex top{{x, fx}};
+        sf::Vertex bot{{x, fx - width}};
+
+        floor.append(top);
+        floor.append(bot);
+    }
+    m_floor = floor;
 }
-float World::popFirst(){
-    
+
+sf::VertexArray World::getFloor(){
+    return m_floor;
 }

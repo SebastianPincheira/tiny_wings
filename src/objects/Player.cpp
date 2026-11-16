@@ -1,7 +1,7 @@
 #include "objects/Player.hpp"
 
-Player::Player(float q_x, float q_y, float p_x, float p_y)
-    : m_q{q_x, q_y}, m_p{p_x, p_y}
+Player::Player(float q_x, float q_y, float p_x, float p_y, float width_of_world)
+    : m_q{q_x, q_y}, m_p{p_x, p_y}, m_world{width_of_world}
 {
 }
 
@@ -67,3 +67,8 @@ void Player::move(float dt)
         // Fix this correction method. It is ass lol (too unstable for consecutive collisions).
         m_q.y -= getHeight();
 }
+
+World Player::getWorld() const
+{
+    return m_world;
+} 

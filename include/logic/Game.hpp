@@ -10,15 +10,15 @@
 
 class Game
 {
-public:
-    Game(float q_x, float q_y, float p_x, float p_y, bool headless);
-    void run();
-
 private:
     Player m_player;
 
     bool m_headless{};
 
+
+public:
+    Game(float q_x, float q_y, float p_x, float p_y, bool headless, float width_of_world);
+    void run();
     void processEvents(sf::Window &window) const;
     void update(float dt);
     void render(sf::RenderWindow &window) const;
