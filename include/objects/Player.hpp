@@ -79,5 +79,5 @@ public:
     /**
      * @brief Gets the world the player inhabits.
      */
-    World getWorld() const; 
+    World& getWorld(); 
 };

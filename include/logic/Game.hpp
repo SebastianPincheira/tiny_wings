@@ -12,7 +12,6 @@ class Game
 {
 private:
     Player m_player;
-
     bool m_headless{};
 
 
@@ -21,5 +20,5 @@ public:
     void run();
     void processEvents(sf::Window &window) const;
     void update(float dt);
-    void render(sf::RenderWindow &window) const;
+    void render(sf::RenderWindow &window);
 };

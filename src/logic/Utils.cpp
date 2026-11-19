@@ -22,4 +22,12 @@ namespace Utils
             return -1.f;
         return 0.f;
     }
+
+    float abs(float x)
+    {
+        if (x >= 0)
+            return x;
+        else
+            return -x;
+    }
 }

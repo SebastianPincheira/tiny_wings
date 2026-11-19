@@ -70,7 +70,7 @@ void Player::move(float dt)
         m_q.y -= getHeight();
 }
 
-World Player::getWorld() const
+World& Player::getWorld()
 {
     return m_world;
 }

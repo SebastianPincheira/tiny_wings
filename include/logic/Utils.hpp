@@ -9,4 +9,5 @@ namespace Utils
     float norm(const sf::Vector2f &v);
     sf::Vector2f normalize(const sf::Vector2f &v);
     float sign(float x);
+    float abs(float x);
 }
