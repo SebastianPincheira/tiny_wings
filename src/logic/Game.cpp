@@ -1,5 +1,8 @@
 #include "logic/Game.hpp"
 
+constexpr sf::Time logic_period{sf::seconds(1.f / Config::LOGIC_HZ)};
+constexpr sf::Time render_period{sf::seconds(1.f / Config::RENDER_HZ)};
+
 Game::Game(float q_x, float q_y, float p_x, float p_y, bool headless, float width_of_world)
     : m_player{q_x, q_y, p_x, p_y, width_of_world}, m_headless{headless}
 {
@@ -7,14 +10,16 @@ Game::Game(float q_x, float q_y, float p_x, float p_y, bool headless, float widt
 
 void Game::run()
 {
-    bool isRunning;
     if (m_headless)
     {
-        sf::Clock clock;
+        sf::Clock logic_clock;
         while (true)
-        { // Here I will have to implement the headless version. I need to implement Python events.
-            sf::Time dt = clock.restart();
-            update(dt.asSeconds());
+        { // I need to implement Python events.
+            if (logic_clock.getElapsedTime() >= logic_period)
+            {
+                sf::Time dt = logic_clock.restart();
+                update(dt.asSeconds());
+            }
         }
     }
     else
@@ -32,15 +37,21 @@ void Game::run()
         window.setVerticalSyncEnabled(true);
         window.setView(view);
 
-        sf::Clock clock;
+        sf::Clock logic_clock;
+        sf::Clock render_clock;
         while (window.isOpen())
         {
             processEvents(window);
 
-            sf::Time dt = clock.restart();
-            update(dt.asSeconds());
-
-            render(window);
+            if (logic_clock.getElapsedTime() >= logic_period)
+            {
+                sf::Time dt = logic_clock.restart();
+                update(dt.asSeconds());
+            }
+            if (render_clock.getElapsedTime() >= render_period)
+            {
+                render(window);
+            }
         }
     }
 }

@@ -35,11 +35,11 @@ void Player::redirect(float dt)
     sf::Vector2f acceleration;
     sf::Vector2f tangent{m_world.getTangent(m_q.x)};
 
-    if (getHeight() >= Config::epsilon)
+    if (getHeight() >= Config::epsilon) // Not touching floor currently
     {
         acceleration = m_world.gravity();
     }
-    else
+    else // Touching floor currently
     {
         float tangentAccelerationNorm{
             Utils::dot(m_world.gravity(), tangent)};
@@ -51,8 +51,10 @@ void Player::redirect(float dt)
             sf::Vector2f p_perp{m_p - p_parallel};
             m_p = p_parallel - Config::ELLASTICITY * p_perp;
         }
-        else
-        {
+        else if (
+            Utils::normalize(m_p).y <= Utils::sign(m_p.x) * Utils::normalize(tangent).y // Touching and touched floor, slope incresing.
+        )
+        { // We correct the tangent to fit the slope.
             m_p = Utils::sign(Utils::dot(m_p, tangent)) * getSpeed() * tangent;
         }
     };
@@ -71,4 +73,4 @@ void Player::move(float dt)
 World Player::getWorld() const
 {
     return m_world;
-} 
+}
