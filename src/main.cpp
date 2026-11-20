@@ -3,7 +3,7 @@
 
 int main()
 {
-    const float width_of_world{20}; // This is meant to be temporary magic number.
+    constexpr float width_of_world{20}; // This is meant to be temporary magic number.
     Game game{0.1f, 25.f, 0.f, 0.0f, false, width_of_world};
     game.run();
 

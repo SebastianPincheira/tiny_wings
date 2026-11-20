@@ -30,7 +30,7 @@ void World::generateFloor(float x_i, float x_f, float dx)
 {
     const float width{getWidth()};
     sf::VertexArray floor{sf::PrimitiveType::TriangleStrip};
-    for (int n{0}; x_i + n * dx < x_f; ++n)
+    for (int n{0}; x_i + n * dx <= x_f; ++n)
     {
         const float x{x_i + n * dx};
         const float fx{getHeight(x)};

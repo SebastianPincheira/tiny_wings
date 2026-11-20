@@ -3,7 +3,7 @@
 void Game::render(sf::RenderWindow &window)
 {
     const Player& player{m_world.getPlayer()};
-    const float radius{2.f};
+    constexpr float radius{2.f};
     sf::VertexArray & floor{m_world.getFloor()};
 
     window.clear(sf::Color::Black);
