@@ -2,6 +2,6 @@
 
 void Game::update(float dt)
 {
-    m_player.redirect(dt);
-    m_player.move(dt);
+    m_world.getPlayer().redirect(dt);
+    m_world.getPlayer().move(dt);
 }

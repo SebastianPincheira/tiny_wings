@@ -1,7 +1,8 @@
 #include "objects/Player.hpp"
+#include "objects/World.hpp"
 
-Player::Player(float q_x, float q_y, float p_x, float p_y, float width_of_world)
-    : m_q{q_x, q_y}, m_p{p_x, p_y}, m_world{width_of_world}
+Player::Player(float q_x, float q_y, float p_x, float p_y, World &world)
+    : m_q{q_x, q_y}, m_p{p_x, p_y}, m_world{world}
 {
 }
 
@@ -17,14 +18,27 @@ float Player::getHeight() const
 {
     return m_q.y - m_world.getHeight(m_q.x);
 }
-sf::Vector2f Player::q() const
+
+const sf::Vector2f &Player::q() const
 {
     return m_q;
 }
-sf::Vector2f Player::p() const
+
+sf::Vector2f &Player::q()
+{
+    return m_q;
+}
+
+const sf::Vector2f &Player::p() const
 {
     return m_p;
 }
+
+sf::Vector2f &Player::p()
+{
+    return m_p;
+}
+
 void Player::updateTouchedFloorLastIter()
 {
     touchedFloorLastIter = (getHeight() < Config::epsilon);
@@ -33,7 +47,7 @@ void Player::updateTouchedFloorLastIter()
 void Player::redirect(float dt)
 {
     sf::Vector2f acceleration;
-    sf::Vector2f tangent{m_world.getTangent(m_q.x)};
+    const sf::Vector2f tangent{m_world.getTangent(m_q.x)};
 
     if (getHeight() >= Config::epsilon) // Not touching floor currently
     {
@@ -47,8 +61,8 @@ void Player::redirect(float dt)
 
         if (not touchedFloorLastIter)
         {
-            sf::Vector2f p_parallel{Utils::dot(m_p, tangent) * tangent};
-            sf::Vector2f p_perp{m_p - p_parallel};
+            const sf::Vector2f p_parallel{Utils::dot(m_p, tangent) * tangent};
+            const sf::Vector2f p_perp{m_p - p_parallel};
             m_p = p_parallel - Config::ELLASTICITY * p_perp;
         }
         else if (
@@ -70,7 +84,7 @@ void Player::move(float dt)
         m_q.y -= getHeight();
 }
 
-World& Player::getWorld()
+const World &Player::getWorld() const
 {
     return m_world;
 }

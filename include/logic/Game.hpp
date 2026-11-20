@@ -4,16 +4,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "objects/World.hpp"
-#include "objects/Player.hpp"
 #include "Config.hpp"
 #include <iostream>
 
 class Game
 {
 private:
-    Player m_player;
+    World m_world;
     bool m_headless{};
-
 
 public:
     Game(float q_x, float q_y, float p_x, float p_y, bool headless, float width_of_world);

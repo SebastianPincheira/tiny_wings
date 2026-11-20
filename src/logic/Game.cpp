@@ -3,8 +3,8 @@
 constexpr sf::Time logic_period{sf::seconds(1.f / Config::LOGIC_HZ)};
 constexpr sf::Time render_period{sf::seconds(1.f / Config::RENDER_HZ)};
 
-Game::Game(float q_x, float q_y, float p_x, float p_y, bool headless, float width_of_world)
-    : m_player{q_x, q_y, p_x, p_y, width_of_world}, m_headless{headless}
+Game::Game(float q_x, float q_y, float p_x, float p_y, bool headless, float width)
+    : m_world{width, q_x, q_y, p_x, p_y}, m_headless{headless}
 {
 }
 
@@ -17,7 +17,7 @@ void Game::run()
         { // I need to implement Python events.
             if (logic_clock.getElapsedTime() >= logic_period)
             {
-                sf::Time dt = logic_clock.restart();
+                const sf::Time dt = logic_clock.restart();
                 update(dt.asSeconds());
             }
         }
@@ -45,7 +45,7 @@ void Game::run()
 
             if (logic_clock.getElapsedTime() >= logic_period)
             {
-                sf::Time dt = logic_clock.restart();
+                const sf::Time dt = logic_clock.restart();
                 update(dt.asSeconds());
             }
             if (render_clock.getElapsedTime() >= render_period)

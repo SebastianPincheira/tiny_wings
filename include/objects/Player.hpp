@@ -2,9 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include "objects/World.hpp"
 #include "Config.hpp"
 #include "logic/Utils.hpp"
+
+class World;
 
 class Player
 {
@@ -12,7 +13,7 @@ private:
     sf::Vector2f m_q{};               ///< Playe's position.
     sf::Vector2f m_p{};               ///< Player's velocity.
     bool m_falling{false};            ///< Weather the player is falling faster. Tuggled by the user.
-    World m_world;                    ///< The world the player inhabits.
+    World &m_world;                   ///< The world the player inhabits.
     bool touchedFloorLastIter{false}; ///< Weather the player touched the floor on it's previous position.
 
 public:
@@ -24,9 +25,8 @@ public:
      * @param q_y Player's y-axis initial position.
      * @param p_x Player's x-axis initial velocity.
      * @param p_x Player's y-axis initial velocity.
-     * @param wisth_of_world The width of the world the player inhabits.
      */
-    Player(float q_x, float q_y, float p_x, float p_y, float width_of_world);
+    Player(float q_x, float q_y, float p_x, float p_y, World &world);
 
     /**
      * @brief Gives the speed of the player.
@@ -62,14 +62,24 @@ public:
     void redirect(float dt);
 
     /**
-     * @brief Gets the position of the player.
+     * @brief Gets a constant reference to the position of the player.
      */
-    sf::Vector2f q() const;
+    const sf::Vector2f &q() const;
 
     /**
-     * @brief Gets the velocity of the player.
+     * @brief Gets a reference to the position of the player.
      */
-    sf::Vector2f p() const;
+    sf::Vector2f &q();
+
+    /**
+     * @brief Gets a constant reference to the velocity of the player.
+     */
+    const sf::Vector2f &p() const;
+
+    /**
+     * @brief Gets a reference to the velocity of the player.
+     */
+    sf::Vector2f &p();
 
     /**
      * @brief Updates the state of `touchedFloorLastIter` to reflect the state of the player on the last iter.
@@ -77,7 +87,7 @@ public:
     void updateTouchedFloorLastIter();
 
     /**
-     * @brief Gets the world the player inhabits.
+     * @brief Gets a constant reference to the world the player inhabits.
      */
-    World& getWorld(); 
+    const World &getWorld() const;
 };
